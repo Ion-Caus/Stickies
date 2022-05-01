@@ -8,19 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ionc.stickies.R;
 import com.ionc.stickies.model.Deck;
-import com.ionc.stickies.model.SynonymsCard;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_DECK= "com.ionc.stickies.DECK";
-
 
     private DeckViewModel deckViewModel;
 
@@ -50,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (deckViewModel.getAllDecks().getValue() == null || deckViewModel.getAllDecks().getValue().isEmpty()) {
-            System.out.println(deckViewModel.getAllDecks().getValue());
             insertDummy();
         }
 
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Opening deck " + deck.getName(), Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(MainActivity.this, CardsActivity.class);
-            intent.putExtra(EXTRA_DECK, deck.getId());
+            intent.putExtra(CardsActivity.SELECTED_DECK, deck.getId());
             startActivity(intent);
 
         });

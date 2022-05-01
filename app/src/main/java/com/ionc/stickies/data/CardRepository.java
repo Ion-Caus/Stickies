@@ -30,7 +30,7 @@ public class CardRepository {
         synonymCardsByDeck = new MutableLiveData<>(new ArrayList<>());
     }
 
-    public void init(int deckId) {
+    public void initData(int deckId) {
         allSynonymCards = cardDao.getAllSynonymsCards();
         synonymCardsByDeck = cardDao.getSynonymsCardsByDeckId(deckId);
     }

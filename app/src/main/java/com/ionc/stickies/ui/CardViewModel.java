@@ -19,8 +19,8 @@ public class CardViewModel extends AndroidViewModel {
         repository = CardRepository.getInstance(app);
     }
 
-    public void init(int deckId) {
-        repository.init(deckId);
+    public void initData(int deckId) {
+        repository.initData(deckId);
     }
 
     public LiveData<List<SynonymsCard>> getAllSynonymCards() {
