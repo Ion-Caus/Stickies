@@ -1,4 +1,4 @@
-package com.ionc.stickies;
+package com.ionc.stickies.data;
 
 import android.content.Context;
 
@@ -7,20 +7,22 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.ionc.stickies.model.Deck;
 import com.ionc.stickies.model.SynonymsCard;
 
-@Database(entities = {SynonymsCard.class}, version = 1, exportSchema = false)
+@Database(entities = {SynonymsCard.class, Deck.class}, version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
-public abstract class CardDatabase extends RoomDatabase {
+public abstract class StickiesDatabase extends RoomDatabase {
 
-    private static CardDatabase instance;
+    private static StickiesDatabase instance;
 
     public abstract CardDao cardDao();
+    public abstract DeckDao deckDao();
 
-    public static synchronized CardDatabase getInstance(Context context){
+    public static synchronized StickiesDatabase getInstance(Context context){
         if(instance == null) {
             instance = Room.databaseBuilder(context,
-                    CardDatabase.class, "card_database")
+                    StickiesDatabase.class, "stickies_database")
                     .fallbackToDestructiveMigration()
                     .build();
         }

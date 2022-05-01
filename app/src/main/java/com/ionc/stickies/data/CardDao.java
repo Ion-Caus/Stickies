@@ -1,4 +1,4 @@
-package com.ionc.stickies;
+package com.ionc.stickies.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Dao
 public interface CardDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(SynonymsCard synonymsCard);
 
     @Update
@@ -25,4 +25,7 @@ public interface CardDao {
 
     @Query("SELECT * FROM synonyms_card ORDER BY recallScore")
     LiveData<List<SynonymsCard>> getAllSynonymsCards();
+
+    @Query("SELECT * FROM synonyms_card WHERE deck_id == :deckId")
+    LiveData<List<SynonymsCard>> getSynonymsCardsByDeckId(int deckId);
 }

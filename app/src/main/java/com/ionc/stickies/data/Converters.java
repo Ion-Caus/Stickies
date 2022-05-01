@@ -1,4 +1,4 @@
-package com.ionc.stickies;
+package com.ionc.stickies.data;
 
 import androidx.room.TypeConverter;
 

@@ -1,4 +1,4 @@
-package com.ionc.stickies;
+package com.ionc.stickies.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ionc.stickies.R;
 import com.ionc.stickies.model.SynonymsCard;
 
 import java.util.ArrayList;

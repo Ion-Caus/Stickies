@@ -1,11 +1,13 @@
-package com.ionc.stickies;
+package com.ionc.stickies.data;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.ionc.stickies.model.SynonymsCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,15 +16,23 @@ public class CardRepository {
     private static CardRepository instance;
     private final CardDao cardDao;
 
-    private final LiveData<List<SynonymsCard>> allSynonymCards;
+    private LiveData<List<SynonymsCard>> allSynonymCards;
+    private LiveData<List<SynonymsCard>> synonymCardsByDeck;
+
     private final ExecutorService executorService;
 
     private CardRepository(Application application) {
-        CardDatabase database = CardDatabase.getInstance(application);
+        StickiesDatabase database = StickiesDatabase.getInstance(application);
         cardDao = database.cardDao();
-
-        allSynonymCards = cardDao.getAllSynonymsCards();
         executorService = Executors.newFixedThreadPool(2);
+
+        allSynonymCards = new MutableLiveData<>(new ArrayList<>());
+        synonymCardsByDeck = new MutableLiveData<>(new ArrayList<>());
+    }
+
+    public void init(int deckId) {
+        allSynonymCards = cardDao.getAllSynonymsCards();
+        synonymCardsByDeck = cardDao.getSynonymsCardsByDeckId(deckId);
     }
 
 
@@ -35,6 +45,11 @@ public class CardRepository {
 
     public LiveData<List<SynonymsCard>> getAllSynonymCards() {
         return allSynonymCards;
+    }
+
+
+    public LiveData<List<SynonymsCard>> getSynonymCardsByDeckId() {
+        return synonymCardsByDeck;
     }
 
     public void insert(SynonymsCard synonymsCard) {
