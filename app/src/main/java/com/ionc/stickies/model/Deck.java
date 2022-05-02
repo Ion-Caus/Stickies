@@ -45,6 +45,17 @@ public class Deck {
 
     public enum DeckType {
         SYNONYMS,
-        TRANSLATION
+        TRANSLATION;
+
+        public static DeckType convertToType(String type) {
+            switch (type.toUpperCase()) {
+                case "SYNONYMS":
+                    return SYNONYMS;
+                case "TRANSLATION":
+                    return TRANSLATION;
+                default:
+                    throw new IllegalArgumentException("Unexpected value: " + type);
+            }
+        }
     }
 }

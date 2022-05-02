@@ -1,5 +1,7 @@
 package com.ionc.stickies.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private DecksAdapter decksAdapter;
 
     private FloatingActionButton addBtn;
+
+    private ActivityResultLauncher<Intent> resultLauncher;
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -60,11 +64,36 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(decksAdapter);
 
         addBtn = findViewById(R.id.floating_add__deck_button);
+
+        initResultLauncher();
         addBtn.setOnClickListener(view -> {
-            deckViewModel.insert(  new Deck("New deck", Deck.DeckType.TRANSLATION) );
-            decksAdapter.notifyDataSetChanged();
+//            deckViewModel.insert(  new Deck("New deck", Deck.DeckType.TRANSLATION) );
+//            decksAdapter.notifyDataSetChanged();
+            Intent intent = new Intent(MainActivity.this, AddDeckActivity.class);
+            resultLauncher.launch(intent);
         });
 
+    }
+
+    private void initResultLauncher() {
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+
+                    Intent resultIntent = result.getData();
+                    if (resultIntent == null) return;
+
+                    Bundle bundle = resultIntent.getExtras();
+                    if (bundle == null) return;
+
+                    if (bundle.containsKey(AddCardActivity.CREATE_CARD_STATUS)) {
+                        boolean status = bundle.getBoolean(AddCardActivity.CREATE_CARD_STATUS);
+                        if (status)
+                            Toast.makeText(this, "Card was added.", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(this, "Failed to add the card", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 
     private void insertDummy() {

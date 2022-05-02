@@ -24,6 +24,9 @@
         <activity
             android:name=".ui.AddCardActivity"
             android:exported="true" />
+        <activity
+            android:name=".ui.AddDeckActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

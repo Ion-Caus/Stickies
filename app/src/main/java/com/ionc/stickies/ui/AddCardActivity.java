@@ -2,6 +2,7 @@ package com.ionc.stickies.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class AddCardActivity extends AppCompatActivity {
 
         synonymsView = findViewById(R.id.tv_synonyms_list);
         synonymsView.setText("");
+        synonymsView.setMovementMethod(new ScrollingMovementMethod());
 
         addSynonymBtn = findViewById(R.id.add_synonym_button);
         createCardBtn = findViewById(R.id.create_card_button);

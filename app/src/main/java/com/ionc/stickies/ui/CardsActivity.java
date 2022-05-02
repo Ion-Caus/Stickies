@@ -63,19 +63,10 @@ public class CardsActivity extends AppCompatActivity {
 
         addBtn = findViewById(R.id.floating_add__card_button);
         addBtn.setOnClickListener(view -> {
-//            cardViewModel.insert(  new SynonymsCard("Stable",true, 0, new String[] {"constant", "even", "steady"}, deckId) );
-//            cardsAdapter.notifyDataSetChanged();
-
             Intent intent = new Intent(CardsActivity.this, AddCardActivity.class);
             intent.putExtra(SELECTED_DECK, deckId);
             resultLauncher.launch(intent);
         });
-
-//        if (cardViewModel.getAllSynonymCards().getValue() == null || cardViewModel.getAllSynonymCards().getValue().isEmpty()) {
-//            System.out.println(cardViewModel.getAllSynonymCards().getValue());
-//            insertDummy();
-//        }
-
     }
 
     private void initDataViewModel() {
