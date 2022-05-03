@@ -60,12 +60,17 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
         private final TextView word;
         private final TextView synonyms;
 
+        private final CardAnimator animator;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             word = itemView.findViewById(R.id.tv_word);
             synonyms = itemView.findViewById(R.id.tv_synonyms);
 
+            animator = new CardAnimator(itemView, 600);
+
             itemView.setOnClickListener(v -> {
+                animator.flipSynonymCard();
                 listener.onClick(synonymsCards.get(getBindingAdapterPosition()));
             });
         }

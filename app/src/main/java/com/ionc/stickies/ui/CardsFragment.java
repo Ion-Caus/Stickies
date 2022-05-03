@@ -1,5 +1,6 @@
 package com.ionc.stickies.ui;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -121,7 +122,7 @@ public class CardsFragment extends Fragment {
 
     private void setupCardPress() {
         cardsAdapter.setOnClickListener(card -> {
-            Toast.makeText(getActivity(), Arrays.toString(card.getSynonyms()), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), Arrays.toString(card.getSynonyms()), Toast.LENGTH_SHORT).show();
         });
     }
 }

@@ -15,8 +15,11 @@
         <entry key="app/src/main/res/layout/dropdown_list_item.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/fragment_add_card.xml" value="0.2539154052734375" />
         <entry key="app/src/main/res/layout/fragment_add_deck.xml" value="0.19972826086956522" />
-        <entry key="app/src/main/res/layout/fragment_cards.xml" value="0.4199356079101562" />
+        <entry key="app/src/main/res/layout/fragment_cards.xml" value="0.2484298706054687" />
         <entry key="app/src/main/res/layout/fragment_decks.xml" value="0.2572463768115942" />
+        <entry key="app/src/main/res/layout/fragment_play.xml" value="0.2749094202898551" />
+        <entry key="app/src/main/res/layout/layout_synonyms_card.xml" value="0.2749094202898551" />
+        <entry key="app/src/main/res/layout/list_item_dropdown.xml" value="0.2749094202898551" />
         <entry key="app/src/main/res/layout/synonyms_card_layout.xml" value="0.444368799181952" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.1890625" />

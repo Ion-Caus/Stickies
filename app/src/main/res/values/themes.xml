@@ -18,7 +18,7 @@
         <item name="android:background">@drawable/round_shape_btn</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.MyApp.Button.Rounded" parent="Widget.AppCompat.Button.Colored">
+    <style name="ShapeAppearanceOverlay.Stickies.Button.Rounded" parent="Widget.AppCompat.Button.Colored">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">70%</item>
     </style>
