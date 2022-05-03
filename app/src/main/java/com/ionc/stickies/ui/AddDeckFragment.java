@@ -1,23 +1,28 @@
 package com.ionc.stickies.ui;
 
-import android.content.Intent;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.ionc.stickies.R;
 import com.ionc.stickies.model.Deck;
 
 
-public class AddDeckActivity extends AppCompatActivity {
-    public static final String CREATE_DECK_STATUS = "com.ionc.stickies.createDeckStatus";
+public class AddDeckFragment extends Fragment {
 
     private TextInputLayout inputName;
     private TextInputLayout selectType;
@@ -25,24 +30,34 @@ public class AddDeckActivity extends AppCompatActivity {
     private Button createDeckBtn;
 
     private DeckViewModel deckViewModel;
+    private NavController navController;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_deck);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_add_deck, container, false);
+    }
 
-        initViews();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initViews(view);
+        initNavController(view);
         initViewModel();
         setListeners();
     }
 
-    private void initViews() {
-        inputName = findViewById(R.id.tf_deck_name);
+    private void initViews(@NonNull View view) {
+        inputName = view.findViewById(R.id.tf_deck_name);
 
-        selectType = findViewById(R.id.tl_deck_type);
+        selectType = view.findViewById(R.id.tl_deck_type);
         setUpDropdown();
 
-        createDeckBtn = findViewById(R.id.create_deck_button);
+        createDeckBtn = view.findViewById(R.id.create_deck_button);
+    }
+
+    private void initNavController(@NonNull View view) {
+        navController = Navigation.findNavController(view);
     }
 
     private void setUpDropdown() {
@@ -54,7 +69,7 @@ public class AddDeckActivity extends AppCompatActivity {
             };
 
             dropdownView.setAdapter(
-                    new ArrayAdapter<>(this, R.layout.dropdown_list_item, types)
+                    new ArrayAdapter<>(getActivity(), R.layout.list_item_dropdown, types)
             );
         }
     }
@@ -96,7 +111,7 @@ public class AddDeckActivity extends AppCompatActivity {
             submit(true);
         }
         catch (IllegalArgumentException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {
             e.fillInStackTrace();
@@ -106,10 +121,12 @@ public class AddDeckActivity extends AppCompatActivity {
     }
 
     public void submit(boolean status) {
-        Intent intent = new Intent();
-        intent.putExtra(CREATE_DECK_STATUS, status);
-        setResult(RESULT_OK, intent);
-        finish();
+        String message = status
+                ? "Deck was added."
+                : "Failed to add the deck";
+
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        navController.popBackStack();
     }
 }
 

@@ -23,10 +23,6 @@ public class CardViewModel extends AndroidViewModel {
         repository.initData(deckId);
     }
 
-    public LiveData<List<SynonymsCard>> getAllSynonymCards() {
-        return repository.getAllSynonymCards();
-    }
-
     public LiveData<List<SynonymsCard>> getSynonymCardsByDeck() {
         return repository.getSynonymCardsByDeckId();
     }
