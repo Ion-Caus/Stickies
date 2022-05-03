@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/fragment_decks">
+
+    <fragment
+        android:id="@+id/fragment_decks"
+        android:name="com.ionc.stickies.ui.DecksFragment"
+        android:label="fragment_decks"
+        tools:layout="@layout/fragment_decks" >
+        <action
+            android:id="@+id/action_fragment_decks_to_fragment_add_deck"
+            app:destination="@id/fragment_add_deck" />
+        <action
+            android:id="@+id/action_fragment_decks_to_fragment_cards"
+            app:destination="@id/fragment_cards" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_add_deck"
+        android:name="com.ionc.stickies.ui.AddDeckFragment"
+        android:label="fragment_add_deck"
+        tools:layout="@layout/fragment_add_deck" />
+
+    <fragment
+        android:id="@+id/fragment_cards"
+        android:name="com.ionc.stickies.ui.CardsFragment"
+        android:label="fragment_cards"
+        tools:layout="@layout/fragment_cards" >
+        <action
+            android:id="@+id/action_fragment_cards_to_fragment_add_card"
+            app:destination="@id/fragment_add_card" />
+        <action
+            android:id="@+id/action_fragment_cards_to_fragment_play"
+            app:destination="@id/fragment_play" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_add_card"
+        android:name="com.ionc.stickies.ui.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" />
+
+    <fragment
+        android:id="@+id/fragment_play"
+        android:name="com.ionc.stickies.ui.PlayFragment"
+        android:label="fragment_play"
+        tools:layout="@layout/fragment_play" />
+
+
+</navigation>

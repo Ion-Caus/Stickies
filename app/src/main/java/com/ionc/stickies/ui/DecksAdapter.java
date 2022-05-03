@@ -36,7 +36,7 @@ public class DecksAdapter extends RecyclerView.Adapter<DecksAdapter.ViewHolder> 
     @Override
     public DecksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.deck_layout, parent, false);
+        View view = inflater.inflate(R.layout.layout_deck, parent, false);
         return new DecksAdapter.ViewHolder(view);
     }
 

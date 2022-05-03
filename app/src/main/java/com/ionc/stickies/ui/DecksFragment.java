@@ -1,0 +1,96 @@
+package com.ionc.stickies.ui;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ionc.stickies.R;
+
+import java.util.ArrayList;
+
+
+public class DecksFragment extends Fragment {
+
+    private DeckViewModel deckViewModel;
+
+    private NavController navController;
+
+    private RecyclerView recyclerView;
+    private DecksAdapter decksAdapter;
+
+    private FloatingActionButton addBtn;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_decks, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initViews(view);
+        initNavController(view);
+
+        setupAdapter();
+        initViewModel();
+
+        setupObservers();
+        setupListeners();
+    }
+
+    private void initViews(@NonNull View view) {
+        recyclerView = view.findViewById(R.id.recycle_view_decks);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager((MainActivity)getActivity()));
+
+        addBtn = view.findViewById(R.id.floating_add__deck_button);
+    }
+
+    private void initViewModel() {
+        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+    }
+
+    private void setupAdapter() {
+        decksAdapter = new DecksAdapter(new ArrayList<>());
+        recyclerView.setAdapter(decksAdapter);
+    }
+
+    private void initNavController(@NonNull View view) {
+        navController = Navigation.findNavController(view);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void setupObservers() {
+        deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
+            decksAdapter.setDecks(decks);
+            decksAdapter.notifyDataSetChanged();
+        });
+    }
+
+    private void setupListeners() {
+        decksAdapter.setOnClickListener(deck -> {
+            Bundle args = new Bundle();
+            args.putInt(CardsFragment.DECK_ID, deck.getId());
+            navController.navigate(R.id.action_fragment_decks_to_fragment_cards, args);
+
+        });
+
+        addBtn.setOnClickListener(v -> {
+            navController.navigate(R.id.action_fragment_decks_to_fragment_add_deck);
+        });
+    }
+}
