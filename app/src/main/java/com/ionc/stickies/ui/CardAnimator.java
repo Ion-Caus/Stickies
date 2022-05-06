@@ -40,7 +40,6 @@ public class CardAnimator {
         animator.addUpdateListener(valueAnimator -> {
             float value = valueAnimator.getAnimatedFraction();
 
-            System.out.println(value);
             if(value <= 0.5f){
                 tvWord.setVisibility(View.VISIBLE);
                 tvSynonyms.setVisibility(View.GONE);

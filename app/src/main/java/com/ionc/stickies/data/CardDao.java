@@ -28,4 +28,7 @@ public interface CardDao {
 
     @Query("SELECT * FROM synonyms_card WHERE deck_id == :deckId")
     LiveData<List<SynonymsCard>> getSynonymsCardsByDeckId(int deckId);
+
+    @Query("SELECT * FROM synonyms_card WHERE deck_id == :deckId ORDER BY recallScore")
+    List<SynonymsCard> getSynonymsCardsByDeckIdOrdered(int deckId);
 }

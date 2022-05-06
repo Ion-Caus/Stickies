@@ -24,7 +24,7 @@ public class CardViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<SynonymsCard>> getSynonymCardsByDeck() {
-        return repository.getSynonymCardsByDeckId();
+        return repository.getSynonymCards();
     }
 
     public void insert(final SynonymsCard card) {

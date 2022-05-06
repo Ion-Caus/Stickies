@@ -16,7 +16,6 @@ public class CardRepository {
     private static CardRepository instance;
     private final CardDao cardDao;
 
-    private LiveData<List<SynonymsCard>> allSynonymCards;
     private LiveData<List<SynonymsCard>> synonymCardsByDeck;
 
     private final ExecutorService executorService;
@@ -26,12 +25,10 @@ public class CardRepository {
         cardDao = database.cardDao();
         executorService = Executors.newFixedThreadPool(2);
 
-        allSynonymCards = new MutableLiveData<>(new ArrayList<>());
         synonymCardsByDeck = new MutableLiveData<>(new ArrayList<>());
     }
 
     public void initData(int deckId) {
-        allSynonymCards = cardDao.getAllSynonymsCards();
         synonymCardsByDeck = cardDao.getSynonymsCardsByDeckId(deckId);
     }
 
@@ -43,16 +40,20 @@ public class CardRepository {
         return instance;
     }
 
-    public LiveData<List<SynonymsCard>> getAllSynonymCards() {
-        return allSynonymCards;
+    public List<SynonymsCard> getSynonymCardsOrdered(int deckId) {
+        return cardDao.getSynonymsCardsByDeckIdOrdered(deckId);
     }
 
 
-    public LiveData<List<SynonymsCard>> getSynonymCardsByDeckId() {
+    public LiveData<List<SynonymsCard>> getSynonymCards() {
         return synonymCardsByDeck;
     }
 
     public void insert(SynonymsCard synonymsCard) {
         executorService.execute(() -> cardDao.insert(synonymsCard));
+    }
+
+    public void update(SynonymsCard synonymsCard) {
+        executorService.execute(() -> cardDao.update(synonymsCard));
     }
 }

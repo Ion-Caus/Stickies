@@ -1,6 +1,5 @@
 package com.ionc.stickies.ui;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ionc.stickies.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CardsFragment extends Fragment {
 

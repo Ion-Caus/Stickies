@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
+            android:id="@+id/layout_card"
             layout="@layout/layout_synonyms_card"
 
             android:layout_width="0dp"
@@ -43,7 +43,6 @@
             android:gravity="center"
             android:text="@string/good"
             app:backgroundTint="@color/good_recall"
-            app:iconSize="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/play_btn_ok"
             app:layout_constraintTop_toTopOf="@+id/play_btn_ok"
@@ -56,7 +55,6 @@
             android:text="@string/bad"
             android:gravity="center"
             app:backgroundTint="@color/bad_recall"
-            app:iconSize="48dp"
             app:layout_constraintEnd_toStartOf="@+id/play_btn_ok"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/play_btn_ok"
@@ -70,11 +68,9 @@
             android:gravity="center"
             android:text="@string/ok"
             app:backgroundTint="@color/ok_recall"
-            app:iconSize="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/play_btn_good"
             app:layout_constraintStart_toEndOf="@+id/play_btn_bad"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Stickies.Button.Rounded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</merge>
