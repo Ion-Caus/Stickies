@@ -5,6 +5,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.ionc.stickies.R;
+import com.ionc.stickies.model.Deck;
+import com.ionc.stickies.model.PartOfSpeech;
 import com.ionc.stickies.model.SynonymsCard;
 
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ public class AddCardFragment extends Fragment {
 
     private TextInputLayout inputWord;
     private TextInputLayout inputSynonym;
+
+    private TextInputLayout selectPartOfSpeech;
 
     private TextView synonymsView;
     private Button addSynonymBtn;
@@ -58,12 +64,32 @@ public class AddCardFragment extends Fragment {
         inputWord = view.findViewById(R.id.tf_card_word);
         inputSynonym = view.findViewById(R.id.tf_card_synonym);
 
+        selectPartOfSpeech = view.findViewById(R.id.tl_card_partOfSpeech);
+        setUpDropdown();
+
         synonymsView = view.findViewById(R.id.tv_synonyms_list);
         synonymsView.setText("");
         synonymsView.setMovementMethod(new ScrollingMovementMethod());
 
         addSynonymBtn = view.findViewById(R.id.add_synonym_button);
         createCardBtn = view.findViewById(R.id.create_card_button);
+    }
+
+    private void setUpDropdown() {
+        AutoCompleteTextView dropdownView = ((AutoCompleteTextView)selectPartOfSpeech.getEditText());
+        if (dropdownView != null) {
+            String[] types = new String[] {
+                    PartOfSpeech.Phrase.name(),
+                    PartOfSpeech.Noun.name(),
+                    PartOfSpeech.Verb.name(),
+                    PartOfSpeech.Adjective.name(),
+                    PartOfSpeech.Adverb.name()
+            };
+
+            dropdownView.setAdapter(
+                    new ArrayAdapter<>(getActivity(), R.layout.list_item_dropdown, types)
+            );
+        }
     }
 
     private void initViewModel() {
@@ -118,11 +144,20 @@ public class AddCardFragment extends Fragment {
                 || inputWord.getEditText().getText() == null
                 || inputWord.getEditText().getText().toString().trim().isEmpty()) {
 
-            throw new IllegalArgumentException("Please enter the word");
+            throw new IllegalArgumentException("Please enter the word.");
         }
         String word = inputWord.getEditText().getText().toString().trim();
 
-        return new SynonymsCard(word, false, 0, synonyms.toArray(new String[0]), deckId);
+        if (selectPartOfSpeech.getEditText() == null
+                || selectPartOfSpeech.getEditText().getText() == null
+                || selectPartOfSpeech.getEditText().getText().toString().trim().isEmpty()) {
+
+            throw new IllegalArgumentException("Please select the part of speech for the word.");
+        }
+        String pos = selectPartOfSpeech.getEditText().getText().toString().trim();
+        PartOfSpeech partOfSpeech = PartOfSpeech.convertToPOS(pos);
+
+        return new SynonymsCard(word, false, 0, partOfSpeech, synonyms.toArray(new String[0]), deckId);
     }
 
     private void addCard() {

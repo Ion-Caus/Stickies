@@ -49,6 +49,7 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.word.setText(synonymsCards.get(position).getWord());
         holder.synonyms.setText(Arrays.toString(synonymsCards.get(position).getSynonyms()));
+        holder.partOfSpeech.setText(synonymsCards.get(position).getPartOfSpeech().name());
     }
 
     @Override
@@ -58,11 +59,11 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
 
 
 
-
     // View Holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView word;
         private final TextView synonyms;
+        private final TextView partOfSpeech;
 
         private final CardAnimator animator;
 
@@ -70,6 +71,7 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
             super(itemView);
             word = itemView.findViewById(R.id.tv_word);
             synonyms = itemView.findViewById(R.id.tv_synonyms);
+            partOfSpeech = itemView.findViewById(R.id.tv_partOfSpeech);
 
             animator = new CardAnimator(itemView, 600);
 

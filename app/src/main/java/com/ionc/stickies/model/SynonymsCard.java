@@ -7,7 +7,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
-import androidx.room.PrimaryKey;
 
 @Entity(tableName = "synonyms_card",
         primaryKeys = {"word", "deck_id"},
@@ -21,16 +20,19 @@ public class SynonymsCard {
     private boolean isFavourite;
     private int recallScore;
 
+    private PartOfSpeech partOfSpeech;
+
     private String[] synonyms;
 
     @NonNull
     @ColumnInfo(name = "deck_id")
     private Integer deckId;
 
-    public SynonymsCard(@NonNull String word, boolean isFavourite, int recallScore, String[] synonyms,@NonNull Integer deckId) {
+    public SynonymsCard(@NonNull String word, boolean isFavourite, int recallScore, PartOfSpeech partOfSpeech, String[] synonyms, @NonNull Integer deckId) {
         this.word = word;
         this.isFavourite = isFavourite;
         this.recallScore = recallScore;
+        this.partOfSpeech = partOfSpeech;
         this.synonyms = synonyms;
         this.deckId = deckId;
     }
@@ -66,6 +68,14 @@ public class SynonymsCard {
 
     public void setSynonyms(String[] synonyms) {
         this.synonyms = synonyms;
+    }
+
+    public PartOfSpeech getPartOfSpeech() {
+        return partOfSpeech;
+    }
+
+    public void setPartOfSpeech(PartOfSpeech partOfSpeech) {
+        this.partOfSpeech = partOfSpeech;
     }
 
     @NonNull
