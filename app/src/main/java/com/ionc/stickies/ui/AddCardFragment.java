@@ -20,9 +20,9 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.ionc.stickies.R;
+import com.ionc.stickies.model.Card;
 import com.ionc.stickies.model.Deck;
 import com.ionc.stickies.model.PartOfSpeech;
-import com.ionc.stickies.model.SynonymsCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +30,18 @@ import java.util.List;
 public class AddCardFragment extends Fragment {
 
     private TextInputLayout inputWord;
-    private TextInputLayout inputSynonym;
+    private TextInputLayout inputExplanation;
 
     private TextInputLayout selectPartOfSpeech;
 
-    private TextView synonymsView;
-    private Button addSynonymBtn;
+    private TextView explanationsView;
+    private Button addExplanationBtn;
     private Button createCardBtn;
 
     private NavController navController;
 
     private CardViewModel cardViewModel;
-    private List<String> synonyms;
+    private List<String> explanations;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,22 +56,23 @@ public class AddCardFragment extends Fragment {
         initNavController(view);
         initViewModel();
         setListeners();
+        updateInputTitle();
 
-        synonyms = new ArrayList<>();
+        explanations = new ArrayList<>();
     }
 
     private void initViews(@NonNull View view) {
         inputWord = view.findViewById(R.id.tf_card_word);
-        inputSynonym = view.findViewById(R.id.tf_card_synonym);
+        inputExplanation = view.findViewById(R.id.tf_card_explanation);
 
         selectPartOfSpeech = view.findViewById(R.id.tl_card_partOfSpeech);
         setUpDropdown();
 
-        synonymsView = view.findViewById(R.id.tv_synonyms_list);
-        synonymsView.setText("");
-        synonymsView.setMovementMethod(new ScrollingMovementMethod());
+        explanationsView = view.findViewById(R.id.tv_explanations_list);
+        explanationsView.setText("");
+        explanationsView.setMovementMethod(new ScrollingMovementMethod());
 
-        addSynonymBtn = view.findViewById(R.id.add_synonym_button);
+        addExplanationBtn = view.findViewById(R.id.add_explanation_button);
         createCardBtn = view.findViewById(R.id.create_card_button);
     }
 
@@ -93,7 +94,7 @@ public class AddCardFragment extends Fragment {
     }
 
     private void initViewModel() {
-        cardViewModel = new ViewModelProvider(this).get(CardViewModel.class);
+        cardViewModel = new ViewModelProvider(requireActivity()).get(CardViewModel.class);
     }
 
     private void initNavController(@NonNull View view) {
@@ -101,45 +102,35 @@ public class AddCardFragment extends Fragment {
     }
 
     private void setListeners() {
-        addSynonymBtn.setOnClickListener(view -> {
-            if (inputSynonym.getEditText() == null
-                    || inputSynonym.getEditText().getText() == null
-                    || inputSynonym.getEditText().getText().toString().trim().isEmpty()) {
+        addExplanationBtn.setOnClickListener(view -> {
+            if (inputExplanation.getEditText() == null
+                    || inputExplanation.getEditText().getText() == null
+                    || inputExplanation.getEditText().getText().toString().trim().isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter a synonym.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String synonym = inputSynonym.getEditText().getText().toString().trim();
-            inputSynonym.getEditText().setText("");
-            synonyms.add(synonym);
-            updateSynonymsView();
+            String explanation = inputExplanation.getEditText().getText().toString().trim();
+            inputExplanation.getEditText().setText("");
+            explanations.add(explanation);
+            updateExplanationsView();
         });
 
-        createCardBtn.setOnClickListener(view -> {
-            addCard();
-        });
+        createCardBtn.setOnClickListener(view -> addCard());
     }
 
-    private void updateSynonymsView() {
-        if (synonyms.isEmpty()) {
-            synonymsView.setText("");
+    private void updateExplanationsView() {
+        if (explanations.isEmpty()) {
+            explanationsView.setText("");
             return;
         }
 
-        synonymsView.setText("");
-        for (String synonym: synonyms) {
-            synonymsView.append("• " + synonym + "\n");
+        explanationsView.setText("");
+        for (String explanation: explanations) {
+            explanationsView.append("• " + explanation + "\n");
         }
     }
 
-    private int getDeck() {
-         if (getArguments() == null || getArguments().isEmpty()) {
-             throw new IllegalArgumentException("The deck ID was not passed.");
-        }
-        return getArguments().getInt("DeckId");
-
-    }
-
-    private SynonymsCard createCard(int deckId, List<String> synonyms) {
+    private Card createCard(int deckId, List<String> synonyms) {
         if (inputWord.getEditText() == null
                 || inputWord.getEditText().getText() == null
                 || inputWord.getEditText().getText().toString().trim().isEmpty()) {
@@ -157,13 +148,13 @@ public class AddCardFragment extends Fragment {
         String pos = selectPartOfSpeech.getEditText().getText().toString().trim();
         PartOfSpeech partOfSpeech = PartOfSpeech.convertToPOS(pos);
 
-        return new SynonymsCard(word, false, 0, partOfSpeech, synonyms.toArray(new String[0]), deckId);
+        return new Card(word, false, 0, partOfSpeech, synonyms.toArray(new String[0]), deckId);
     }
 
     private void addCard() {
         try {
-            int deckId = getDeck();
-            SynonymsCard card = createCard(deckId, synonyms);
+            int deckId = cardViewModel.getDeckId();
+            Card card = createCard(deckId, explanations);
             cardViewModel.insert(card);
             submit(true);
         }
@@ -184,5 +175,21 @@ public class AddCardFragment extends Fragment {
 
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         navController.popBackStack();
+    }
+
+    private void updateInputTitle() {
+        Deck.DeckType deckType = Deck.DeckType.convertToType(cardViewModel.getDeckType());
+        String hint;
+        switch (deckType) {
+            case SYNONYMS:
+                hint = getResources().getString(R.string.insert_synonym);
+                break;
+            case TRANSLATION:
+                hint = getResources().getString(R.string.insert_translation);
+                break;
+            default:
+                return;
+        }
+        inputExplanation.setHint(hint);
     }
 }

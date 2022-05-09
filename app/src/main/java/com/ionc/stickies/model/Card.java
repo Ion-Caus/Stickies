@@ -8,32 +8,33 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
-@Entity(tableName = "synonyms_card",
-        primaryKeys = {"word", "deck_id"},
+@Entity(tableName = "card",
+        primaryKeys = {"word", "deck_id", "partOfSpeech"},
         foreignKeys = @ForeignKey(entity = Deck.class, parentColumns = "deckId", childColumns = "deck_id", onDelete = CASCADE),
         indices = {@Index("deck_id")}
 )
-public class SynonymsCard {
+public class Card {
 
     @NonNull
     private String word;
     private boolean isFavourite;
     private int recallScore;
 
+    @NonNull
     private PartOfSpeech partOfSpeech;
 
-    private String[] synonyms;
+    private String[] explanations;
 
     @NonNull
     @ColumnInfo(name = "deck_id")
     private Integer deckId;
 
-    public SynonymsCard(@NonNull String word, boolean isFavourite, int recallScore, PartOfSpeech partOfSpeech, String[] synonyms, @NonNull Integer deckId) {
+    public Card(@NonNull String word, boolean isFavourite, int recallScore,@NonNull PartOfSpeech partOfSpeech, String[] explanations, @NonNull Integer deckId) {
         this.word = word;
         this.isFavourite = isFavourite;
         this.recallScore = recallScore;
         this.partOfSpeech = partOfSpeech;
-        this.synonyms = synonyms;
+        this.explanations = explanations;
         this.deckId = deckId;
     }
 
@@ -62,19 +63,20 @@ public class SynonymsCard {
         this.recallScore = recallScore;
     }
 
-    public String[] getSynonyms() {
-        return synonyms;
+    public String[] getExplanations() {
+        return explanations;
     }
 
-    public void setSynonyms(String[] synonyms) {
-        this.synonyms = synonyms;
+    public void setExplanations(String[] explanations) {
+        this.explanations = explanations;
     }
 
+    @NonNull
     public PartOfSpeech getPartOfSpeech() {
         return partOfSpeech;
     }
 
-    public void setPartOfSpeech(PartOfSpeech partOfSpeech) {
+    public void setPartOfSpeech(@NonNull PartOfSpeech partOfSpeech) {
         this.partOfSpeech = partOfSpeech;
     }
 

@@ -6,13 +6,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title_synonyms"
+        android:id="@+id/title_cards_fragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:text="Synonyms Cards"
+        android:text="@string/title_synonyms_cards"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_synonyms" />
+        app:layout_constraintTop_toBottomOf="@+id/title_cards_fragment" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/play_card_btn"

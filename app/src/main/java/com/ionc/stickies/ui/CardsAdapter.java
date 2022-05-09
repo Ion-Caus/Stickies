@@ -9,18 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ionc.stickies.R;
-import com.ionc.stickies.model.SynonymsCard;
+import com.ionc.stickies.model.Card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdapter.ViewHolder> {
-    private final List<SynonymsCard> synonymsCards;
+public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
+    private final List<Card> cards;
     private OnClickListener listener;
 
-    public SynonymsCardsAdapter(ArrayList<SynonymsCard> synonymsCards) {
-        this.synonymsCards = synonymsCards;
+    public CardsAdapter(ArrayList<Card> cards) {
+        this.cards = cards;
     }
 
     public void setOnClickListener(OnClickListener listener) {
@@ -28,33 +28,33 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
     }
 
 
-    public void setSynonymsCards(List<SynonymsCard> synonymsCards) {
-        this.synonymsCards.clear();
-        this.synonymsCards.addAll(synonymsCards);
+    public void setCards(List<Card> cards) {
+        this.cards.clear();
+        this.cards.addAll(cards);
     }
 
-    public List<SynonymsCard> getCards() {
-        return synonymsCards;
+    public List<Card> getCards() {
+        return cards;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_synonyms_card, parent, false);
+        View view = inflater.inflate(R.layout.layout_explanations_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.word.setText(synonymsCards.get(position).getWord());
-        holder.synonyms.setText(Arrays.toString(synonymsCards.get(position).getSynonyms()));
-        holder.partOfSpeech.setText(synonymsCards.get(position).getPartOfSpeech().name());
+        holder.word.setText(cards.get(position).getWord());
+        holder.explanations.setText(Arrays.toString(cards.get(position).getExplanations()));
+        holder.partOfSpeech.setText(cards.get(position).getPartOfSpeech().name());
     }
 
     @Override
     public int getItemCount() {
-        return synonymsCards.size();
+        return cards.size();
     }
 
 
@@ -62,7 +62,7 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
     // View Holder
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView word;
-        private final TextView synonyms;
+        private final TextView explanations;
         private final TextView partOfSpeech;
 
         private final CardAnimator animator;
@@ -70,20 +70,20 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             word = itemView.findViewById(R.id.tv_word);
-            synonyms = itemView.findViewById(R.id.tv_synonyms);
+            explanations = itemView.findViewById(R.id.tv_explanations);
             partOfSpeech = itemView.findViewById(R.id.tv_partOfSpeech);
 
             animator = new CardAnimator(itemView, 600);
 
             itemView.setOnClickListener(v -> {
-                animator.flipSynonymCard();
-                listener.onClick(synonymsCards.get(getBindingAdapterPosition()));
+                animator.flipCard();
+                listener.onClick(cards.get(getBindingAdapterPosition()));
             });
         }
     }
 
     // On Click Listener
     public interface OnClickListener {
-        void onClick(SynonymsCard card);
+        void onClick(Card card);
     }
 }

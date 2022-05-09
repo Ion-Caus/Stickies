@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:hint="Insert the Word"
+        android:hint="@string/insert_the_word"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:hint="Choose the type"
+        android:hint="@string/choose_the_part_of_speech"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tf_card_word">
@@ -44,12 +44,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tf_card_synonym"
+        android:id="@+id/tf_card_explanation"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:hint="Insert a Synonym"
+        android:hint="@string/insert_synonym"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_card_partOfSpeech">
@@ -68,11 +68,11 @@
         android:layout_marginBottom="32dp"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/add_synonym_button"
-        app:layout_constraintStart_toStartOf="@+id/add_synonym_button" />
+        app:layout_constraintEnd_toEndOf="@+id/add_explanation_button"
+        app:layout_constraintStart_toStartOf="@+id/add_explanation_button" />
 
     <Button
-        android:id="@+id/add_synonym_button"
+        android:id="@+id/add_explanation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -80,24 +80,24 @@
         android:layout_marginEnd="20dp"
         android:text="@string/add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tf_card_synonym" />
+        app:layout_constraintTop_toBottomOf="@+id/tf_card_explanation" />
 
 
 
     <TextView
-        android:id="@+id/tv_synonyms_list"
+        android:id="@+id/tv_explanations_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
         android:textSize="16sp"
         android:gravity="top"
         android:padding="20dp"
-        android:text="@string/synonyms"
+        android:text="@string/empty"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_synonym_button"
+        app:layout_constraintEnd_toStartOf="@+id/add_explanation_button"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tf_card_synonym"
+        app:layout_constraintTop_toBottomOf="@+id/tf_card_explanation"
         app:layout_constraintVertical_bias="0.0" />
 
 

@@ -16,7 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.ionc.stickies.R;
-import com.ionc.stickies.model.SynonymsCard;
+import com.ionc.stickies.model.Card;
 
 import java.util.Arrays;
 
@@ -72,14 +72,15 @@ public class PlayFragment extends Fragment {
     }
 
     private void displayNextCard() {
-        SynonymsCard card = playViewModel.getNextDisplayCard();
+        Card card = playViewModel.getNextDisplayCard();
         if (card == null) {
             Toast.makeText(getActivity(), "Play time over.", Toast.LENGTH_SHORT).show();
             navController.popBackStack();
             return;
         }
         cardView.word.setText( card.getWord() );
-        cardView.synonyms.setText( Arrays.toString(card.getSynonyms()) );
+        cardView.partOfSpeech.setText( card.getPartOfSpeech().name() );
+        cardView.explanations.setText( Arrays.toString(card.getExplanations()) );
     }
 
     private void setupButtonsPress() {
@@ -105,18 +106,20 @@ public class PlayFragment extends Fragment {
 
     public static class ViewHolder  {
         private final TextView word;
-        private final TextView synonyms;
+        private final TextView explanations;
+        private final TextView partOfSpeech;
 
         private final CardAnimator animator;
 
         public ViewHolder(@NonNull View itemView) {
 
             word = itemView.findViewById(R.id.tv_word);
-            synonyms = itemView.findViewById(R.id.tv_synonyms);
+            explanations = itemView.findViewById(R.id.tv_explanations);
+            partOfSpeech = itemView.findViewById(R.id.tv_partOfSpeech);
 
-            animator = new CardAnimator(itemView, 500);
+            animator = new CardAnimator(itemView, 600);
 
-            itemView.setOnClickListener(v -> animator.flipSynonymCard());
+            itemView.setOnClickListener(v -> animator.flipCard());
         }
 
         public void resetAnimation() {

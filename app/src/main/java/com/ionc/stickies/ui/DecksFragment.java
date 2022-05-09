@@ -30,6 +30,8 @@ import java.util.ArrayList;
 
 public class DecksFragment extends Fragment {
 
+    public static final String DECK_TYPE = "DeckType";
+
     private DeckViewModel deckViewModel;
 
     private NavController navController;
@@ -94,6 +96,7 @@ public class DecksFragment extends Fragment {
         decksAdapter.setOnClickListener(deck -> {
             Bundle args = new Bundle();
             args.putInt(CardsFragment.DECK_ID, deck.getId());
+            args.putString(DECK_TYPE, deck.getDeckType().name());
             navController.navigate(R.id.action_fragment_decks_to_fragment_cards, args);
 
         });

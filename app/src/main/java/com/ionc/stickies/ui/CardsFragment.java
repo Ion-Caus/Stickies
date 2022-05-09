@@ -3,11 +3,13 @@ package com.ionc.stickies.ui;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ionc.stickies.R;
+import com.ionc.stickies.model.Card;
 import com.ionc.stickies.model.Deck;
-import com.ionc.stickies.model.SynonymsCard;
 
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ public class CardsFragment extends Fragment {
     private CardViewModel cardViewModel;
 
     private RecyclerView recyclerView;
-    private SynonymsCardsAdapter cardsAdapter;
+    private CardsAdapter cardsAdapter;
 
     private NavController navController;
 
@@ -57,9 +59,10 @@ public class CardsFragment extends Fragment {
 
         initViewModel();
 
-        int deckId = getDeckArg();
-        initDataViewModel(deckId);
-        setupButtonsPress(deckId);
+        initDataViewModel();
+        setupButtonsPress();
+
+        updateTitle(view);
 
         setupObservers();
         setupCardPress();
@@ -68,12 +71,15 @@ public class CardsFragment extends Fragment {
 
     }
 
-    private int getDeckArg() {
+    private void getArg() {
         if (getArguments() == null || getArguments().isEmpty()) {
             Toast.makeText(getActivity(), "Can not load the cards.", Toast.LENGTH_SHORT).show();
-            return -1;
+            return;
         }
-        return getArguments().getInt(DECK_ID);
+        int deckId = getArguments().getInt(DECK_ID);
+
+        cardViewModel.setDeckId(deckId);
+        cardViewModel.setDeckType(getArguments().getString(DecksFragment.DECK_TYPE));
     }
 
     private void initViews(@NonNull View view) {
@@ -86,7 +92,9 @@ public class CardsFragment extends Fragment {
     }
 
     private void initViewModel() {
-        cardViewModel = new ViewModelProvider(this).get(CardViewModel.class);
+        cardViewModel = new ViewModelProvider(requireActivity()).get(CardViewModel.class);
+
+        getArg(); // get the arguments
     }
 
     private void initNavController(@NonNull View view) {
@@ -94,36 +102,51 @@ public class CardsFragment extends Fragment {
     }
 
     private void setupAdapter() {
-        cardsAdapter = new SynonymsCardsAdapter(new ArrayList<>());
+        cardsAdapter = new CardsAdapter(new ArrayList<>());
         recyclerView.setAdapter(cardsAdapter);
         recyclerView.setHorizontalScrollBarEnabled(true);
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private void setupObservers() {
-        cardViewModel.getSynonymCardsByDeck().observe(getViewLifecycleOwner(), cards -> {
-            cardsAdapter.setSynonymsCards(cards);
+        cardViewModel.getCardsByDeck().observe(getViewLifecycleOwner(), cards -> {
+            cardsAdapter.setCards(cards);
             cardsAdapter.notifyDataSetChanged();
         });
 
     }
 
-    private void initDataViewModel(int deckId) {
-        cardViewModel.initData(deckId);
+    private void updateTitle(@NonNull View view) {
+        if (getArguments() == null || getArguments().isEmpty()) {
+           return;
+        }
+        cardViewModel.setDeckType(getArguments().getString(DecksFragment.DECK_TYPE));
+
+        TextView tv = view.findViewById(R.id.title_cards_fragment);
+
+        Deck.DeckType deckType = Deck.DeckType.convertToType(cardViewModel.getDeckType());
+        String title;
+        switch (deckType) {
+            case SYNONYMS:
+                title = getResources().getString(R.string.title_synonyms_cards);
+                break;
+            case TRANSLATION:
+                title = getResources().getString(R.string.titles_translations_cards);
+                break;
+            default:
+                return;
+        }
+        tv.setText(title);
     }
 
-    private void setupButtonsPress(int deckId) {
-        addBtn.setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putInt(DECK_ID, deckId);
-            navController.navigate(R.id.action_fragment_cards_to_fragment_add_card, args);
-        });
+    private void initDataViewModel() {
+        cardViewModel.initData(cardViewModel.getDeckId());
+    }
 
-        playBtn.setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putInt(DECK_ID, deckId);
-            navController.navigate(R.id.action_fragment_cards_to_fragment_play, args);
-        });
+    private void setupButtonsPress() {
+        addBtn.setOnClickListener(v -> navController.navigate(R.id.action_fragment_cards_to_fragment_add_card));
+
+        playBtn.setOnClickListener(v -> navController.navigate(R.id.action_fragment_cards_to_fragment_play));
     }
 
     private void setupCardPress() {
@@ -144,7 +167,7 @@ public class CardsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
                     int position = viewHolder.getAbsoluteAdapterPosition();
-                    SynonymsCard card = cardsAdapter.getCards().get(position);
+                    Card card = cardsAdapter.getCards().get(position);
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
                             deleteCard(position, card);
@@ -176,7 +199,7 @@ public class CardsFragment extends Fragment {
         recyclerView.scrollToPosition(position);
     }
 
-    private void deleteCard(int position, SynonymsCard card) {
+    private void deleteCard(int position, Card card) {
         cardViewModel.delete(card);
         cardsAdapter.notifyItemRemoved(position);
     }

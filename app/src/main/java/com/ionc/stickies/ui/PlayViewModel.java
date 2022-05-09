@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.ionc.stickies.data.CardRepository;
-import com.ionc.stickies.model.SynonymsCard;
+import com.ionc.stickies.model.Card;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +19,7 @@ public class PlayViewModel extends AndroidViewModel {
 
     private final CardRepository repository;
 
-    private List<SynonymsCard> cards;
+    private List<Card> cards;
 
     private int nextCardDisplayedPos;
 
@@ -29,7 +29,7 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     public void loadData() {
-        LiveData<List<SynonymsCard>> liveCards = repository.getSynonymCards();
+        LiveData<List<Card>> liveCards = repository.getCards();
         cards = liveCards.getValue();
 
         if (cards == null) return;
@@ -42,11 +42,11 @@ public class PlayViewModel extends AndroidViewModel {
         nextCardDisplayedPos = 0;
     }
 
-    public SynonymsCard getNextDisplayCard() {
+    public Card getNextDisplayCard() {
         if (nextCardDisplayedPos + 1 > cards.size()) {
             return null;
         }
-        SynonymsCard card = cards.get(nextCardDisplayedPos);
+        Card card = cards.get(nextCardDisplayedPos);
         nextCardDisplayedPos++;
         return card;
     }
@@ -64,7 +64,7 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     private void updateRecallScore(int value) {
-        SynonymsCard card = cards.get(nextCardDisplayedPos-1);
+        Card card = cards.get(nextCardDisplayedPos-1);
         card.setRecallScore(
                 card.getRecallScore() + value
         );

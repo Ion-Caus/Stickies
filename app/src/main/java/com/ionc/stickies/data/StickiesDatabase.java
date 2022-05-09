@@ -7,10 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.ionc.stickies.model.Card;
 import com.ionc.stickies.model.Deck;
-import com.ionc.stickies.model.SynonymsCard;
 
-@Database(entities = {SynonymsCard.class, Deck.class}, version = 7, exportSchema = false)
+@Database(entities = {Card.class, Deck.class}, version = 9, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class StickiesDatabase extends RoomDatabase {
 

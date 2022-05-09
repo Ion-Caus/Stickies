@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.ionc.stickies.model.SynonymsCard;
+import com.ionc.stickies.model.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class CardRepository {
     private static CardRepository instance;
     private final CardDao cardDao;
 
-    private LiveData<List<SynonymsCard>> synonymCardsByDeck;
+    private LiveData<List<Card>> cardsByDeck;
 
     private final ExecutorService executorService;
 
@@ -25,11 +25,11 @@ public class CardRepository {
         cardDao = database.cardDao();
         executorService = Executors.newFixedThreadPool(2);
 
-        synonymCardsByDeck = new MutableLiveData<>(new ArrayList<>());
+        cardsByDeck = new MutableLiveData<>(new ArrayList<>());
     }
 
     public void initData(int deckId) {
-        synonymCardsByDeck = cardDao.getSynonymsCardsByDeckId(deckId);
+        cardsByDeck = cardDao.getCardsByDeckId(deckId);
     }
 
 
@@ -41,19 +41,19 @@ public class CardRepository {
     }
 
 
-    public LiveData<List<SynonymsCard>> getSynonymCards() {
-        return synonymCardsByDeck;
+    public LiveData<List<Card>> getCards() {
+        return cardsByDeck;
     }
 
-    public void insert(SynonymsCard synonymsCard) {
-        executorService.execute(() -> cardDao.insert(synonymsCard));
+    public void insert(Card card) {
+        executorService.execute(() -> cardDao.insert(card));
     }
 
-    public void update(SynonymsCard synonymsCard) {
-        executorService.execute(() -> cardDao.update(synonymsCard));
+    public void update(Card card) {
+        executorService.execute(() -> cardDao.update(card));
     }
 
-    public void delete(SynonymsCard synonymsCard) {
-        executorService.execute(() -> cardDao.delete(synonymsCard));
+    public void delete(Card card) {
+        executorService.execute(() -> cardDao.delete(card));
     }
 }

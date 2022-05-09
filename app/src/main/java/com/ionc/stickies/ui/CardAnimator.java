@@ -19,10 +19,10 @@ public class CardAnimator {
         animator = ObjectAnimator.ofFloat(view, "rotationY", 0, DEGREES_180);
         animator.setDuration(duration);
 
-        updateViewSynonymCard(view);
+        updateViewCard(view);
     }
 
-    public void flipSynonymCard() {
+    public void flipCard() {
         if (isFlipped) {
             animator.reverse();
         }
@@ -39,22 +39,27 @@ public class CardAnimator {
         }
     }
 
-    private void updateViewSynonymCard(View view) {
+    private void updateViewCard(View view) {
 
-        View tvSynonyms = view.findViewById(R.id.tv_synonyms);
+        View tvExplanations = view.findViewById(R.id.tv_explanations);
         View tvWord = view.findViewById(R.id.tv_word);
+        View tvPartOfSpeech = view.findViewById(R.id.tv_partOfSpeech);
 
         animator.addUpdateListener(valueAnimator -> {
             float value = valueAnimator.getAnimatedFraction();
 
             if(value <= 0.5f){
                 tvWord.setVisibility(View.VISIBLE);
-                tvSynonyms.setVisibility(View.GONE);
+                tvPartOfSpeech.setVisibility(View.VISIBLE);
+
+                tvExplanations.setVisibility(View.GONE);
             }
             else {
                 tvWord.setVisibility(View.GONE);
-                tvSynonyms.setRotationY(DEGREES_180);
-                tvSynonyms.setVisibility(View.VISIBLE);
+                tvPartOfSpeech.setVisibility(View.GONE);
+
+                tvExplanations.setRotationY(DEGREES_180);
+                tvExplanations.setVisibility(View.VISIBLE);
             }
         });
 

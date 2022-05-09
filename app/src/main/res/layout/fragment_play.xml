@@ -15,7 +15,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="Play Time"
+            android:text="@string/play_time"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,9 +25,9 @@
 
         <include
             android:id="@+id/layout_card"
-            layout="@layout/layout_synonyms_card"
+            layout="@layout/layout_explanations_card"
 
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/play_btn_ok"
             app:layout_constraintEnd_toEndOf="parent"

@@ -15,4 +15,12 @@
     <string name="bad">Bad</string>
     <string name="ok">OK</string>
     <string name="delete_deck">delete deck</string>
+    <string name="title_synonyms_cards">Synonyms Cards</string>
+    <string name="titles_translations_cards">Translations Cards</string>
+    <string name="insert_the_word">Insert the Word</string>
+    <string name="choose_the_part_of_speech">Choose the part of speech</string>
+    <string name="insert_synonym">Insert synonym</string>
+    <string name="insert_translation">Insert translation</string>
+    <string name="empty">empty</string>
+    <string name="play_time">Play Time</string>
 </resources>
