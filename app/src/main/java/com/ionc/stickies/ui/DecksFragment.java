@@ -1,6 +1,10 @@
 package com.ionc.stickies.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ionc.stickies.R;
+import com.ionc.stickies.model.Deck;
 
 import java.util.ArrayList;
 
@@ -32,6 +38,7 @@ public class DecksFragment extends Fragment {
     private DecksAdapter decksAdapter;
 
     private FloatingActionButton addBtn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +57,8 @@ public class DecksFragment extends Fragment {
 
         setupObservers();
         setupListeners();
+
+        setUpItemTouchHelper();
     }
 
     private void initViews(@NonNull View view) {
@@ -89,8 +98,54 @@ public class DecksFragment extends Fragment {
 
         });
 
-        addBtn.setOnClickListener(v -> {
-            navController.navigate(R.id.action_fragment_decks_to_fragment_add_deck);
-        });
+        addBtn.setOnClickListener(v -> navController.navigate(R.id.action_fragment_decks_to_fragment_add_deck));
+    }
+
+    private void setUpItemTouchHelper() {
+        ItemTouchHelper.SimpleCallback swipeCallback =  new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    int position = viewHolder.getAbsoluteAdapterPosition();
+                    Deck deck = decksAdapter.getDecks().get(position);
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            deleteDeck(position, deck);
+                            Toast.makeText(getActivity(), "Deck deleted", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            undoSwipe(position, deck);
+                            Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                };
+
+                new AlertDialog.Builder(getActivity())
+                        .setMessage("Are you sure you want to delete?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void undoSwipe(int position, Deck deck) {
+        decksAdapter.getDecks().add(deck);
+        decksAdapter.notifyItemInserted(position);
+    }
+
+    private void deleteDeck(int position, Deck deck) {
+        deckViewModel.delete(deck);
+        decksAdapter.notifyItemRemoved(position);
     }
 }

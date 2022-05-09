@@ -40,10 +40,6 @@ public class CardRepository {
         return instance;
     }
 
-    public List<SynonymsCard> getSynonymCardsOrdered(int deckId) {
-        return cardDao.getSynonymsCardsByDeckIdOrdered(deckId);
-    }
-
 
     public LiveData<List<SynonymsCard>> getSynonymCards() {
         return synonymCardsByDeck;
@@ -55,5 +51,9 @@ public class CardRepository {
 
     public void update(SynonymsCard synonymsCard) {
         executorService.execute(() -> cardDao.update(synonymsCard));
+    }
+
+    public void delete(SynonymsCard synonymsCard) {
+        executorService.execute(() -> cardDao.delete(synonymsCard));
     }
 }

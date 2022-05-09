@@ -23,9 +23,6 @@ public interface CardDao {
     @Delete
     void delete(SynonymsCard synonymsCard);
 
-    @Query("SELECT * FROM synonyms_card ORDER BY recallScore")
-    LiveData<List<SynonymsCard>> getAllSynonymsCards();
-
     @Query("SELECT * FROM synonyms_card WHERE deck_id == :deckId")
     LiveData<List<SynonymsCard>> getSynonymsCardsByDeckId(int deckId);
 

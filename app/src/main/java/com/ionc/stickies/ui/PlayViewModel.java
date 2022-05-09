@@ -13,10 +13,12 @@ import java.util.List;
 
 
 public class PlayViewModel extends AndroidViewModel {
+    private static final int GOOD_SCORE = 5;
+    private static final int OK_SCORE = 1;
+    private static final int BAD_SCORE = -3;
 
     private final CardRepository repository;
 
-    private LiveData<List<SynonymsCard>> liveCards;
     private List<SynonymsCard> cards;
 
     private int nextCardDisplayedPos;
@@ -27,7 +29,7 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     public void loadData() {
-        liveCards = repository.getSynonymCards();
+        LiveData<List<SynonymsCard>> liveCards = repository.getSynonymCards();
         cards = liveCards.getValue();
 
         if (cards == null) return;
@@ -50,15 +52,15 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     public void setGoodRecallScore() {
-        updateRecallScore(5);
+        updateRecallScore(GOOD_SCORE);
     }
 
     public void setOkRecallScore() {
-        updateRecallScore(1);
+        updateRecallScore(OK_SCORE);
     }
 
     public void setBadRecallScore() {
-        updateRecallScore(-3);
+        updateRecallScore(BAD_SCORE);
     }
 
     private void updateRecallScore(int value) {

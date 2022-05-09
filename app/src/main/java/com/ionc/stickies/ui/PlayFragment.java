@@ -84,16 +84,19 @@ public class PlayFragment extends Fragment {
 
     private void setupButtonsPress() {
         goodBtn.setOnClickListener(v -> {
+            cardView.resetAnimation();
             playViewModel.setGoodRecallScore();
             displayNextCard();
         });
 
         okBtn.setOnClickListener(v -> {
+            cardView.resetAnimation();
             playViewModel.setOkRecallScore();
             displayNextCard();
         });
 
         badBtn.setOnClickListener(v -> {
+            cardView.resetAnimation();
             playViewModel.setBadRecallScore();
             displayNextCard();
         });
@@ -111,11 +114,13 @@ public class PlayFragment extends Fragment {
             word = itemView.findViewById(R.id.tv_word);
             synonyms = itemView.findViewById(R.id.tv_synonyms);
 
-            animator = new CardAnimator(itemView, 600);
+            animator = new CardAnimator(itemView, 500);
 
-            itemView.setOnClickListener(v -> {
-                animator.flipSynonymCard();
-            });
+            itemView.setOnClickListener(v -> animator.flipSynonymCard());
+        }
+
+        public void resetAnimation() {
+            animator.resetAnimation();
         }
     }
 }

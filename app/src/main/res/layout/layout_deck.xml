@@ -5,9 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
 
+        android:layout_height="110dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="1dp"
@@ -21,9 +22,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingHorizontal="20dp">
+
             <TextView
                 android:id="@+id/deck_id"
                 android:layout_width="wrap_content"
@@ -36,9 +38,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="gravity"
                 android:gravity="center"
                 android:text="Toefl english"
+                android:textAlignment="gravity"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -46,9 +48,9 @@
                 android:id="@+id/deck_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="gravity"
                 android:gravity="center"
                 android:text="SYNONYMS"
+                android:textAlignment="gravity"
                 android:textSize="20sp" />
         </LinearLayout>
 

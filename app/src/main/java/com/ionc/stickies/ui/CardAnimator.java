@@ -32,6 +32,13 @@ public class CardAnimator {
         isFlipped = !isFlipped;
     }
 
+    public void resetAnimation() {
+        if (isFlipped) {
+            animator.reverse();
+            isFlipped = false;
+        }
+    }
+
     private void updateViewSynonymCard(View view) {
 
         View tvSynonyms = view.findViewById(R.id.tv_synonyms);

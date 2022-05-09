@@ -33,6 +33,10 @@ public class SynonymsCardsAdapter extends RecyclerView.Adapter<SynonymsCardsAdap
         this.synonymsCards.addAll(synonymsCards);
     }
 
+    public List<SynonymsCard> getCards() {
+        return synonymsCards;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

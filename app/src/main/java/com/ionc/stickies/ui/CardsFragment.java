@@ -1,6 +1,8 @@
 package com.ionc.stickies.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ionc.stickies.R;
+import com.ionc.stickies.model.Deck;
+import com.ionc.stickies.model.SynonymsCard;
 
 import java.util.ArrayList;
 
@@ -59,6 +64,8 @@ public class CardsFragment extends Fragment {
         setupObservers();
         setupCardPress();
 
+        setUpItemTouchHelper();
+
     }
 
     private int getDeckArg() {
@@ -89,6 +96,7 @@ public class CardsFragment extends Fragment {
     private void setupAdapter() {
         cardsAdapter = new SynonymsCardsAdapter(new ArrayList<>());
         recyclerView.setAdapter(cardsAdapter);
+        recyclerView.setHorizontalScrollBarEnabled(true);
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -122,5 +130,54 @@ public class CardsFragment extends Fragment {
         cardsAdapter.setOnClickListener(card -> {
             //Toast.makeText(getActivity(), Arrays.toString(card.getSynonyms()), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void setUpItemTouchHelper() {
+        ItemTouchHelper.SimpleCallback swipeCallback =  new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.UP) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    int position = viewHolder.getAbsoluteAdapterPosition();
+                    SynonymsCard card = cardsAdapter.getCards().get(position);
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            deleteCard(position, card);
+                            Toast.makeText(getActivity(), "Card deleted", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            undoSwipe(position);
+                            Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                };
+
+                new AlertDialog.Builder(getActivity())
+                        .setMessage("Are you sure you want to delete?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void undoSwipe(int position) {
+        cardsAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(position);
+    }
+
+    private void deleteCard(int position, SynonymsCard card) {
+        cardViewModel.delete(card);
+        cardsAdapter.notifyItemRemoved(position);
     }
 }

@@ -41,4 +41,8 @@ public class DeckRepository {
     public void insert(Deck deck) {
         executorService.execute(() -> deckDao.insert(deck));
     }
+
+    public void delete(Deck deck) {
+        executorService.execute(() -> deckDao.delete(deck));
+    }
 }

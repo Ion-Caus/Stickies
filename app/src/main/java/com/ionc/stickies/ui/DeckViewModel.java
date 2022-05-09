@@ -26,4 +26,8 @@ public class DeckViewModel extends AndroidViewModel {
     public void insert(final Deck deck) {
         repository.insert(deck);
     }
+
+    public void delete(final Deck deck) {
+        repository.delete(deck);
+    }
 }

@@ -30,4 +30,8 @@ public class CardViewModel extends AndroidViewModel {
     public void insert(final SynonymsCard card) {
         repository.insert(card);
     }
+
+    public void delete(final SynonymsCard card) {
+        repository.delete(card);
+    }
 }

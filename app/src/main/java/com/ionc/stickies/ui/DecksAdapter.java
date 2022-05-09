@@ -32,6 +32,10 @@ public class DecksAdapter extends RecyclerView.Adapter<DecksAdapter.ViewHolder> 
         this.decks.addAll(decks);
     }
 
+    public List<Deck> getDecks() {
+        return decks;
+    }
+
     @NonNull
     @Override
     public DecksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,9 +70,7 @@ public class DecksAdapter extends RecyclerView.Adapter<DecksAdapter.ViewHolder> 
             deckName = itemView.findViewById(R.id.deck_name);
             deckType = itemView.findViewById(R.id.deck_type);
 
-            itemView.setOnClickListener(v -> {
-                listener.onClick(decks.get(getBindingAdapterPosition()));
-            });
+            itemView.setOnClickListener(v -> listener.onClick(decks.get(getBindingAdapterPosition())));
         }
     }
 
