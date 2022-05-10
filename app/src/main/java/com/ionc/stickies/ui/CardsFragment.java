@@ -153,6 +153,10 @@ public class CardsFragment extends Fragment {
         cardsAdapter.setOnClickListener(card -> {
             //Toast.makeText(getActivity(), Arrays.toString(card.getSynonyms()), Toast.LENGTH_SHORT).show();
         });
+
+        cardsAdapter.setFavouriteListener(card -> {
+            cardViewModel.updateFavouriteStatus(card);
+        });
     }
 
     private void setUpItemTouchHelper() {

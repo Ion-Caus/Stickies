@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,11 @@ public class PlayFragment extends Fragment {
         cardView.word.setText( card.getWord() );
         cardView.partOfSpeech.setText( card.getPartOfSpeech().name() );
         cardView.explanations.setText( Arrays.toString(card.getExplanations()) );
+
+        int icon = card.isFavourite()
+                ? R.drawable.ic_baseline_favorite_24
+                : R.drawable.ic_baseline_favorite_border_24;
+        cardView.favouriteButton.setBackgroundResource(icon);
     }
 
     private void setupButtonsPress() {
@@ -108,6 +114,7 @@ public class PlayFragment extends Fragment {
         private final TextView word;
         private final TextView explanations;
         private final TextView partOfSpeech;
+        private final ImageButton favouriteButton;
 
         private final CardAnimator animator;
 
@@ -116,6 +123,7 @@ public class PlayFragment extends Fragment {
             word = itemView.findViewById(R.id.tv_word);
             explanations = itemView.findViewById(R.id.tv_explanations);
             partOfSpeech = itemView.findViewById(R.id.tv_partOfSpeech);
+            favouriteButton = itemView.findViewById(R.id.favourite_card_btn);
 
             animator = new CardAnimator(itemView, 600);
 

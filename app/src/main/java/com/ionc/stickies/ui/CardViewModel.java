@@ -38,6 +38,11 @@ public class CardViewModel extends AndroidViewModel {
         repository.delete(card);
     }
 
+    public void updateFavouriteStatus(Card card) {
+        card.setFavourite(!card.isFavourite());
+        repository.update(card);
+    }
+
 
     public int getDeckId() {
         return deckId;

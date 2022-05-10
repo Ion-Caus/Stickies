@@ -3,6 +3,7 @@ package com.ionc.stickies.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import java.util.List;
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     private final List<Card> cards;
     private OnClickListener listener;
+    private OnClickListener favouriteSetListener;
 
     public CardsAdapter(ArrayList<Card> cards) {
         this.cards = cards;
@@ -25,6 +27,10 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     public void setOnClickListener(OnClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setFavouriteListener(OnClickListener favouriteSetListener) {
+        this.favouriteSetListener = favouriteSetListener;
     }
 
 
@@ -50,6 +56,10 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         holder.word.setText(cards.get(position).getWord());
         holder.explanations.setText(Arrays.toString(cards.get(position).getExplanations()));
         holder.partOfSpeech.setText(cards.get(position).getPartOfSpeech().name());
+        int icon = cards.get(position).isFavourite()
+                ? R.drawable.ic_baseline_favorite_24
+                : R.drawable.ic_baseline_favorite_border_24;
+        holder.favouriteButton.setBackgroundResource(icon);
     }
 
     @Override
@@ -64,6 +74,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         private final TextView word;
         private final TextView explanations;
         private final TextView partOfSpeech;
+        private final ImageButton favouriteButton;
 
         private final CardAnimator animator;
 
@@ -72,12 +83,17 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             word = itemView.findViewById(R.id.tv_word);
             explanations = itemView.findViewById(R.id.tv_explanations);
             partOfSpeech = itemView.findViewById(R.id.tv_partOfSpeech);
+            favouriteButton = itemView.findViewById(R.id.favourite_card_btn);
 
             animator = new CardAnimator(itemView, 600);
 
             itemView.setOnClickListener(v -> {
                 animator.flipCard();
                 listener.onClick(cards.get(getBindingAdapterPosition()));
+            });
+
+            favouriteButton.setOnClickListener(v -> {
+                favouriteSetListener.onClick(cards.get(getBindingAdapterPosition()));
             });
         }
     }

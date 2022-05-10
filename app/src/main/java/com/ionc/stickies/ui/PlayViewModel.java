@@ -38,6 +38,9 @@ public class PlayViewModel extends AndroidViewModel {
                 return 0;
             return o1.getRecallScore() < o2.getRecallScore() ? -1 : 1;
         });
+        Collections.sort(cards,
+                (o1, o2) -> Boolean.compare(o2.isFavourite(), o1.isFavourite())
+        );
 
         nextCardDisplayedPos = 0;
     }
