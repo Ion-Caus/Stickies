@@ -23,4 +23,9 @@
     <string name="insert_translation">Insert translation</string>
     <string name="empty">empty</string>
     <string name="play_time">Play Time</string>
+    <string name="log_out">Log out</string>
+    <string name="intro_question">Ready to learn?</string>
+    <string name="intro_italic">press</string>
+    <string name="intro_answer">Of course!</string>
+    <string name="get_started">Get Started</string>
 </resources>

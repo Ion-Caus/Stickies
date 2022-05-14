@@ -2,6 +2,7 @@ package com.ionc.stickies.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,6 +21,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel viewModel;
 
+    private CardViewHolder cardView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,14 @@ public class LoginActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         checkIfSignedIn();
+
+        initViews();
+        displayCard();
+    }
+
+    private void initViews() {
+        View cardLayout = findViewById(R.id.layout_card_intro);
+        cardView = new CardViewHolder(cardLayout);
 
         findViewById(R.id.button_login_google).setOnClickListener(view -> signIn());
     }
@@ -57,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
-                .setLogo(R.drawable.ic_baseline_favorite_24)
+                .setLogo(R.drawable.ic_logo)
                 .build();
 
         activityResultLauncher.launch(signInIntent);
@@ -67,5 +78,12 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void displayCard() {
+        cardView.word.setText( R.string.intro_question );
+        cardView.partOfSpeech.setText( R.string.intro_italic );
+        cardView.explanations.setText( R.string.intro_answer );
+        cardView.favouriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
     }
 }

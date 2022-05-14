@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,7 +24,7 @@ public class PlayFragment extends Fragment {
     private PlayViewModel playViewModel;
 
     private NavController navController;
-    private ViewHolder cardView;
+    private CardViewHolder cardView;
 
     private Button goodBtn;
     private Button okBtn;
@@ -52,7 +50,7 @@ public class PlayFragment extends Fragment {
 
     private void initViews(@NonNull View view) {
         View cardLayout = view.findViewById(R.id.layout_card);
-        cardView = new ViewHolder(cardLayout);
+        cardView = new CardViewHolder(cardLayout);
         
         goodBtn = view.findViewById(R.id.play_btn_good);
         okBtn = view.findViewById(R.id.play_btn_ok);
@@ -107,31 +105,5 @@ public class PlayFragment extends Fragment {
             playViewModel.setBadRecallScore();
             displayNextCard();
         });
-    }
-
-
-    public static class ViewHolder  {
-        private final TextView word;
-        private final TextView explanations;
-        private final TextView partOfSpeech;
-        private final ImageButton favouriteButton;
-
-        private final CardAnimator animator;
-
-        public ViewHolder(@NonNull View itemView) {
-
-            word = itemView.findViewById(R.id.tv_word);
-            explanations = itemView.findViewById(R.id.tv_explanations);
-            partOfSpeech = itemView.findViewById(R.id.tv_partOfSpeech);
-            favouriteButton = itemView.findViewById(R.id.favourite_card_btn);
-
-            animator = new CardAnimator(itemView, 600);
-
-            itemView.setOnClickListener(v -> animator.flipCard());
-        }
-
-        public void resetAnimation() {
-            animator.resetAnimation();
-        }
     }
 }

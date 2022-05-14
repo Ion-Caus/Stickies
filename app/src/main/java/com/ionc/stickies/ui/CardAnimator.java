@@ -1,6 +1,7 @@
 package com.ionc.stickies.ui;
 
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.view.View;
 
 import androidx.annotation.NonNull;
