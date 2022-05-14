@@ -24,7 +24,6 @@ public interface DeckDao {
     @Delete
     void delete(Deck deck);
 
-    @Query("SELECT * FROM deck")
-    LiveData<List<Deck>> getAllDecks();
-
+    @Query("SELECT * FROM deck WHERE userId == :userId")
+    LiveData<List<Deck>> getAllDecksByUser(String userId);
 }

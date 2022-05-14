@@ -14,9 +14,12 @@ public class Deck {
     private String name;
     private DeckType deckType;
 
+    private String userId;
+
     public Deck(String name, DeckType deckType) {
         this.name = name;
         this.deckType = deckType;
+        this.userId = null;
     }
 
     public int getId() {
@@ -33,6 +36,14 @@ public class Deck {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public DeckType getDeckType() {

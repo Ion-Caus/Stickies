@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "762727866244",
+    "firebase_url": "https://stickies-7eb74-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "stickies-7eb74",
+    "storage_bucket": "stickies-7eb74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762727866244:android:6e708117893d08f67847d1",
+        "android_client_info": {
+          "package_name": "com.ionc.stickies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762727866244-sgse9fis5opepb10f1q97bbh4q77anek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ionc.stickies",
+            "certificate_hash": "1212121313131414141515153245632345678765"
+          }
+        },
+        {
+          "client_id": "762727866244-nrn45pi1apvtivr0iloeitts7g3v526c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK0kYSFk81xh1u-O-bue8Q2sJl8GieeWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762727866244-nrn45pi1apvtivr0iloeitts7g3v526c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

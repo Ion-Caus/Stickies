@@ -3,8 +3,6 @@ package com.ionc.stickies.ui;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Canvas;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +64,7 @@ public class DecksFragment extends Fragment {
     private void initViews(@NonNull View view) {
         recyclerView = view.findViewById(R.id.recycle_view_decks);
         recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager((MainActivity)getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         addBtn = view.findViewById(R.id.floating_add__deck_button);
     }
@@ -86,7 +84,7 @@ public class DecksFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void setupObservers() {
-        deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
+        deckViewModel.getAllDecksByUser().observe(getViewLifecycleOwner(), decks -> {
             decksAdapter.setDecks(decks);
             decksAdapter.notifyDataSetChanged();
         });
