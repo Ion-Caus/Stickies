@@ -9,7 +9,7 @@ public class Converters {
     public static String[] fromString(String value) {
         value = value
                 .replaceAll("(\\[|\\])", "")
-                .replaceAll(" ", "");
+                .replaceAll(", ", ",");
 
         return value.split(",");
     }
