@@ -43,6 +43,8 @@ public class AddCardFragment extends Fragment {
     private CardViewModel cardViewModel;
     private List<String> explanations;
 
+    private String errorMessageExplanation;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_card, container, false);
@@ -55,8 +57,8 @@ public class AddCardFragment extends Fragment {
         initViews(view);
         initNavController(view);
         initViewModel();
-        setListeners();
         updateInputTitle();
+        setListeners();
 
         explanations = new ArrayList<>();
     }
@@ -106,7 +108,7 @@ public class AddCardFragment extends Fragment {
             if (inputExplanation.getEditText() == null
                     || inputExplanation.getEditText().getText() == null
                     || inputExplanation.getEditText().getText().toString().trim().isEmpty()) {
-                Toast.makeText(getActivity(), "Please enter a synonym.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), errorMessageExplanation, Toast.LENGTH_SHORT).show();
                 return;
             }
             String explanation = inputExplanation.getEditText().getText().toString().trim();
@@ -130,7 +132,7 @@ public class AddCardFragment extends Fragment {
         }
     }
 
-    private Card createCard(int deckId, List<String> synonyms) {
+    private Card createCard(int deckId, List<String> explanation) {
         if (inputWord.getEditText() == null
                 || inputWord.getEditText().getText() == null
                 || inputWord.getEditText().getText().toString().trim().isEmpty()) {
@@ -148,7 +150,10 @@ public class AddCardFragment extends Fragment {
         String pos = selectPartOfSpeech.getEditText().getText().toString().trim();
         PartOfSpeech partOfSpeech = PartOfSpeech.convertToPOS(pos);
 
-        return new Card(word, false, 0, partOfSpeech, synonyms.toArray(new String[0]), deckId);
+        if (explanation.isEmpty()) {
+            throw new IllegalArgumentException(errorMessageExplanation);
+        }
+        return new Card(word, false, 0, partOfSpeech, explanation.toArray(new String[0]), deckId);
     }
 
     private void addCard() {
@@ -183,13 +188,16 @@ public class AddCardFragment extends Fragment {
         switch (deckType) {
             case SYNONYMS:
                 hint = getResources().getString(R.string.insert_synonym);
+                errorMessageExplanation = "Please enter a synonym.";
                 break;
             case TRANSLATION:
                 hint = getResources().getString(R.string.insert_translation);
+                errorMessageExplanation = "Please enter a translation.";
                 break;
             default:
                 return;
         }
         inputExplanation.setHint(hint);
+
     }
 }
