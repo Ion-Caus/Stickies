@@ -28,4 +28,6 @@
     <string name="intro_italic">press</string>
     <string name="intro_answer">Of course!</string>
     <string name="get_started">Get Started</string>
+    <string name="date">Date</string>
+    <string name="favourite">Favourite</string>
 </resources>
