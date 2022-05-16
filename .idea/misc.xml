@@ -13,6 +13,9 @@
         <entry key="app/src/main/res/drawable/ic_baseline_play_circle_filled_24.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.197" />
+        <entry key="app/src/main/res/drawable/radio_flat_regular.xml" value="0.24" />
+        <entry key="app/src/main/res/drawable/radio_flat_selected.xml" value="0.24" />
+        <entry key="app/src/main/res/drawable/radio_flat_selector.xml" value="0.24" />
         <entry key="app/src/main/res/drawable/round_shape_btn.xml" value="0.197" />
         <entry key="app/src/main/res/layout/activity_add_card.xml" value="0.2572463768115942" />
         <entry key="app/src/main/res/layout/activity_add_deck.xml" value="0.2572463768115942" />
@@ -26,7 +29,7 @@
         <entry key="app/src/main/res/layout/dropdown_list_item.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/fragment_add_card.xml" value="0.2539154052734375" />
         <entry key="app/src/main/res/layout/fragment_add_deck.xml" value="0.19972826086956522" />
-        <entry key="app/src/main/res/layout/fragment_cards.xml" value="0.2484298706054687" />
+        <entry key="app/src/main/res/layout/fragment_cards.xml" value="0.23852386474609374" />
         <entry key="app/src/main/res/layout/fragment_decks.xml" value="0.2572463768115942" />
         <entry key="app/src/main/res/layout/fragment_play.xml" value="0.2749094202898551" />
         <entry key="app/src/main/res/layout/layout_deck.xml" value="0.4006174723307292" />

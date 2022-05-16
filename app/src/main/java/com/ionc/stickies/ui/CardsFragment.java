@@ -3,12 +3,12 @@ package com.ionc.stickies.ui;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +42,9 @@ public class CardsFragment extends Fragment {
 
     private FloatingActionButton addBtn;
     private Button playBtn;
+
+    private RadioButton radioDateBtn;
+    private RadioButton radioFavouriteBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +92,10 @@ public class CardsFragment extends Fragment {
 
         addBtn = view.findViewById(R.id.floating_add__card_button);
         playBtn = view.findViewById(R.id.play_card_btn);
+
+        radioDateBtn = view.findViewById(R.id.radio_date);
+        radioDateBtn.setChecked(true);
+        radioFavouriteBtn = view.findViewById(R.id.radio_favourite);
     }
 
     private void initViewModel() {
@@ -147,6 +154,9 @@ public class CardsFragment extends Fragment {
         addBtn.setOnClickListener(v -> navController.navigate(R.id.action_fragment_cards_to_fragment_add_card));
 
         playBtn.setOnClickListener(v -> navController.navigate(R.id.action_fragment_cards_to_fragment_play));
+
+        radioDateBtn.setOnClickListener(this::onRadioButtonClicked);
+        radioFavouriteBtn.setOnClickListener(this::onRadioButtonClicked);
     }
 
     private void setupCardPress() {
@@ -157,6 +167,23 @@ public class CardsFragment extends Fragment {
         cardsAdapter.setFavouriteListener(card -> {
             cardViewModel.updateFavouriteStatus(card);
         });
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        if (!checked) return;
+
+        int id = view.getId();
+        if (id == R.id.radio_date) {
+            // do sorting
+            cardsAdapter.notifyDataSetChanged();
+
+        }
+        else if (id == R.id.radio_favourite) {
+            // do sorting
+            cardsAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpItemTouchHelper() {
