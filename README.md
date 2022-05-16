@@ -1,9 +1,6 @@
 # Stickies
 The app that helps you learn new synonyms, correct pronunciation, words in other languages, or anything you want.
 
-### Youtube video
-[link](https://youtu.be/0KLF4UDKGGk)
-
 Everyone tries to learn or improve a new language. To achieve that you need a strong vocabulary.
 *Stickies* helps you with that. It allows you to create multiple lists of sticky-cards for specific topics. The front side of the card has the word and the back has the translation and its pronunciation, or some synonyms.
 The user can customize it depending on his needs.
@@ -13,6 +10,10 @@ When I was preparing for the TOEFL exam,  I needed a way to memorize a vast numb
 Now I want to create an app based on this idea to help other students in need.
 And also use the app to improve my Danish vocabulary.
 
+### Youtube video
+[link](https://youtu.be/0KLF4UDKGGk)
+
+### Requirements
 
 | Nr. | Requirement | Done |
 |-----|-------------| -------------|
