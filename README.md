@@ -12,13 +12,14 @@ And also use the app to improve my Danish vocabulary.
 
 
 | Nr. | Requirement | Done |
-| 1.  | As a user, I want to be able to create cards with words, and their synonyms so I can improve my vocabulary. | :heavy_check_mark: |
-| 2.  | As a user, I want to create cards with words, and their translation and pronunciation so I can expand my vocabulary in that language. | :heavy_check_mark: |
-| 3.  | As a user, I want to create different lists with cards for a specific subject I learn. | :heavy_check_mark: |
-| 4.  | As a user, I want to be able to shuffle the cards and test my gained knowledge. |
-| 5.  | As a user, I want to set a score to my answer on the shuffle-test so I can revise a bit more, some specific cards. | :heavy_check_mark: |
-| 6.  | As a user, I want to log in using my google account so that unauthorized users cannot see my information. | :heavy_check_mark: |
-| 7.  | As a user, I want to have different shuffle-test modes so I can maximize my learning in the available period of time.| |
-| 8.  | As a user, I want to be able to set cards as a favourite so I can prioritize them in my learning-tests. | :heavy_check_mark: |
-| 9.  | As a user, I want to be able to sort my list of sticky-cards by date and favourite status, so I can focus on learning some cards first. | |
-| 10. | As a user, I want to add to the word its part of speech, so I can give the correct synonym or translation.| :heavy_check_mark: |
+|-----|-------------| -------------|
+| 1.  | As a user, I want to be able to create cards with words, and their synonyms so I can improve my vocabulary. | :heavy_check_mark: 
+| 2.  | As a user, I want to create cards with words, and their translation and pronunciation so I can expand my vocabulary in that language. | :heavy_check_mark: 
+| 3.  | As a user, I want to create different lists with cards for a specific subject I learn. | :heavy_check_mark: 
+| 4.  | As a user, I want to be able to shuffle the cards and test my gained knowledge. | :heavy_check_mark: 
+| 5.  | As a user, I want to set a score to my answer on the shuffle-test so I can revise a bit more, some specific cards. | :heavy_check_mark: 
+| 6.  | As a user, I want to log in using my google account so that unauthorized users cannot see my information. | :heavy_check_mark: 
+| 7.  | As a user, I want to have different shuffle-test modes so I can maximize my learning in the available period of time.|  |
+| 8.  | As a user, I want to be able to set cards as a favourite so I can prioritize them in my learning-tests. | :heavy_check_mark: 
+| 9.  | As a user, I want to be able to sort my list of sticky-cards by date and favourite status, so I can focus on learning some cards first. |  |
+| 10. | As a user, I want to add to the word its part of speech, so I can give the correct synonym or translation.| :heavy_check_mark: 
